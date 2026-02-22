@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Indygo Rose Estate | Hunter Valley Accommodation</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --sage:#7c8b76;
+  --cream:#f5f3ed;
+  --ink:#111111;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--cream);
+  font-family:'Montserrat',sans-serif;
+  color:#222;
+}
+
+/* ===== NAV ===== */
+nav{
+  position:fixed;
+  top:0;left:0;right:0;
+  padding:18px 8%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(0,0,0,0.22);
+  backdrop-filter:blur(10px);
+  z-index:1000;
+}
+nav .brand{
+  color:#fff;
+  font-family:'Playfair Display',serif;
+  font-weight:400;
+  letter-spacing:0.5px;
+  font-size:20px;
+  line-height:1.05;
+}
+nav .links{
+  display:flex;
+  gap:22px;
+  align-items:center;
+}
+nav a{
+  color:#fff;
+  text-decoration:none;
+  font-size:14px;
+  letter-spacing:1px;
+  opacity:0.95;
+}
+nav a:hover{opacity:1;}
+
+/* ===== HERO ===== */
+.hero{
+  height:100vh;
+  background:url('https://a0.muscache.com/im/pictures/miso/Hosting-1268665741219951439/original/f3b0c03a-3779-4e16-83c0-e191762c2b70.png?im_w=720') center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  position:relative;
+  color:#fff;
+  overflow:hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to bottom, rgba(0,0,0,0.32), rgba(0,0,0,0.68));
+}
+.hero-content{
+  position:relative;
+  z-index:2;
+  padding:0 8%;
+  max-width:980px;
+  animation:fadeUp 0.9s ease forwards;
+  opacity:0;
+  transform:translateY(22px);
+}
+@keyframes fadeUp{
+  to{opacity:1;transform:translateY(0);}
+}
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-weight:400;
+  font-size:64px;
+  letter-spacing:0.5px;
+  margin-bottom:14px;
+  text-shadow:0 10px 30px rgba(0,0,0,0.25);
+}
+.hero p{
+  font-weight:300;
+  font-size:20px;
+  letter-spacing:1px;
+  margin-bottom:28px;
+  opacity:0.95;
+}
+.btn{
+  display:inline-block;
+  padding:16px 42px;
+  background:var(--sage);
+  color:#fff;
+  text-decoration:none;
+  font-size:13px;
+  letter-spacing:2px;
+  transition:0.25s;
+  border-radius:8px;
+}
+.btn:hover{
+  background:#5e6d59;
+  transform:translateY(-2px);
+}
+.scroll-hint{
+  position:absolute;
+  left:50%;
+  bottom:26px;
+  transform:translateX(-50%);
+  z-index:2;
+  font-size:11px;
+  letter-spacing:2px;
+  opacity:0.75;
+}
+
+/* ===== SECTIONS ===== */
+section{
+  padding:110px 10%;
+}
+.section-title{
+  text-align:center;
+  margin-bottom:60px;
+}
+.section-title h2{
+  font-family:'Playfair Display',serif;
+  font-size:42px;
+  font-weight:400;
+  margin-bottom:14px;
+}
+.section-title p{
+  max-width:720px;
+  margin:0 auto;
+  line-height:1.8;
+}
+
+/* ===== FEATURE (RETREAT) ===== */
+.feature{
+  display:flex;
+  gap:60px;
+  align-items:center;
+  margin-bottom:90px;
+}
+.feature img{
+  width:50%;
+  border-radius:14px;
+  box-shadow:0 25px 60px rgba(0,0,0,0.12);
+}
+.feature-content{
+  width:50%;
+}
+.feature-content h3{
+  font-family:'Playfair Display',serif;
+  font-size:36px;
+  font-weight:400;
+  margin-bottom:16px;
+}
+.feature-content p{
+  line-height:1.85;
+  margin-bottom:16px;
+}
+.meta{
+  font-weight:500;
+  letter-spacing:0.5px;
+  margin:22px 0 18px;
+}
+
+/* ===== CARDS (TINY HOMES) ===== */
+.cards{
+  display:flex;
+  gap:34px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+/* FIXED CARD/BUTTON OVERLAP (mobile safe) */
+.card{
+  background:#fff;
+  width:100%;
+  max-width:380px;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 20px 50px rgba(0,0,0,0.08);
+  display:flex;
+  flex-direction:column;
+}
+.card img{
+  width:100%;
+  height:240px;
+  object-fit:cover;
+}
+.card-content{
+  padding:30px 25px 40px 25px;
+  display:flex;
+  flex-direction:column;
+  flex-grow:1;
+  text-align:center;
+}
+.card-content h3{
+  font-family:'Playfair Display',serif;
+  font-size:26px;
+  font-weight:400;
+  margin-bottom:10px;
+}
+.card-content p{
+  margin-bottom:25px;
+  line-height:1.6;
+  flex-grow:1;   /* this lets the button sit at the bottom */
+}
+.card-content .btn{
+  margin-top:auto;
+  width:100%;
+  text-align:center;
+  padding:16px 0;
+  border-radius:8px;
+}
+
+/* ===== FOOTER ===== */
+footer{
+  background:var(--ink);
+  color:#fff;
+  text-align:center;
+  padding:36px 10%;
+  margin-top:60px;
+  opacity:0.95;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+  .feature{flex-direction:column;}
+  .feature img,.feature-content{width:100%;}
+}
+@media(max-width:768px){
+  nav{padding:14px 5%;}
+  nav .brand{font-size:18px;}
+  .hero h1{font-size:36px;}
+  .hero p{font-size:16px;}
+  section{padding:80px 6%;}
+  .section-title h2{font-size:32px;}
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="brand">Indygo Rose<br>Estate</div>
+  <div class="links">
+    <a href="#accommodation">Stays</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<section class="hero" aria-label="Indygo Rose Estate Hero">
+  <div class="hero-content">
+    <h1>Indygo Rose Estate</h1>
+    <p>Boutique Vineyard Stays in Hunter Valley</p>
+    <a class="btn" href="#accommodation">VIEW ACCOMMODATION</a>
+  </div>
+  <div class="scroll-hint">SCROLL</div>
+</section>
+
+<!-- ACCOMMODATION -->
+<section id="accommodation">
+  <div class="section-title">
+    <h2>Our Accommodation</h2>
+    <p>
+      Choose between a spacious vineyard retreat or two private luxury tiny homes — all within one exclusive estate setting in Mount View, Hunter Valley.
+    </p>
+  </div>
+
+  <!-- Featured: Vineyard Retreat -->
+  <div class="feature">
+    <img src="https://a0.muscache.com/im/pictures/miso/Hosting-1268665741219951439/original/ec165f98-777a-4b93-84a6-87e6d1ef52d7.png?im_w=720" alt="Vineyard Retreat with pool at Indygo Rose Estate">
+    <div class="feature-content">
+      <h3>Vineyard Retreat</h3>
+      <p>
+        Six bedrooms. Private pool. Expansive living spaces. Designed for family gatherings and group escapes in the heart of the Hunter Valley wine region.
+      </p>
+      <div class="meta">Sleeps 12 • 6 Bedrooms • Private Pool</div>
+      <a class="btn" href="https://www.airbnb.com.au/rooms/1268665741219951439" target="_blank" rel="noopener">BOOK RETREAT</a>
+    </div>
+  </div>
+
+  <!-- Tiny Homes -->
+  <div class="cards">
+
+    <div class="card">
+      <img src="https://a0.muscache.com/im/pictures/miso/Hosting-1268294298500757107/original/2ed14894-497c-4fab-8e48-9423ef04e619.png?im_w=720" alt="Chardonnay Tiny Home">
+      <div class="card-content">
+        <h3>Chardonnay Tiny Home</h3>
+        <p>Sleeps 2 • Vineyard Views • Private & Modern</p>
+        <a class="btn" href="https://www.airbnb.com.au/rooms/1268294298500757107" target="_blank" rel="noopener">BOOK TINY HOME</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <!-- NOTE: Replace this image with your Merlot image URL when you have it -->
+      <img src="https://a0.muscache.com/im/pictures/miso/Hosting-1268294298500757107/original/2ed14894-497c-4fab-8e48-9423ef04e619.png?im_w=720" alt="Merlot Tiny Home">
+      <div class="card-content">
+        <h3>Merlot Tiny Home</h3>
+        <p>Sleeps 2 • Private Deck • Peaceful Setting</p>
+        <a class="btn" href="#" onclick="alert('Add Merlot booking link here.'); return false;">BOOK TINY HOME</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-title">
+    <h2>Gallery</h2>
+    <p>A small preview of the estate. Add more Airbnb photo URLs to expand this gallery.</p>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <img src="https://a0.muscache.com/im/pictures/miso/Hosting-1268665741219951439/original/f3b0c03a-3779-4e16-83c0-e191762c2b70.png?im_w=720" alt="Estate pool">
+      <div class="card-content">
+        <h3>Estate Pool</h3>
+        <p>Relax by the private pool with vineyard surrounds.</p>
+        <a class="btn" href="#accommodation">VIEW STAYS</a>
+      </div>
+    </div>
+    <div class="card">
+      <img src="https://a0.muscache.com/im/pictures/miso/Hosting-1268294298500757107/original/2ed14894-497c-4fab-8e48-9423ef04e619.png?im_w=720" alt="Tiny home interior">
+      <div class="card-content">
+        <h3>Tiny Home Comfort</h3>
+        <p>Modern design for couples seeking a peaceful escape.</p>
+        <a class="btn" href="#accommodation">VIEW STAYS</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-title">
+    <h2>Contact</h2>
+    <p>Enquire about dates, group stays, or booking the full estate.</p>
+  </div>
+
+  <div style="max-width:720px;margin:0 auto;background:#fff;border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,0.08);padding:28px;">
+    <form onsubmit="alert('Form demo only. Connect this to email or a booking system.'); return false;">
+      <label style="display:block;font-size:13px;letter-spacing:1px;margin-bottom:6px;">NAME</label>
+      <input type="text" required style="width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin-bottom:14px;">
+      
+      <label style="display:block;font-size:13px;letter-spacing:1px;margin-bottom:6px;">EMAIL</label>
+      <input type="email" required style="width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin-bottom:14px;">
+      
+      <label style="display:block;font-size:13px;letter-spacing:1px;margin-bottom:6px;">MESSAGE</label>
+      <textarea rows="5" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;margin-bottom:18px;"></textarea>
+      
+      <button type="submit" class="btn" style="border:none;cursor:pointer;width:100%;">SEND ENQUIRY</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  © 2026 Indygo Rose Estate • Mount View, Hunter Valley NSW
+</footer>
+
+</body>
+</html>
+```0
