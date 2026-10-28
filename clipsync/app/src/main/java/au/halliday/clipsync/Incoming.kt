@@ -5,6 +5,10 @@ import android.util.Log
 import org.json.JSONObject
 
 object Incoming {
+    // ntfy.sh replays missed messages for up to 12 hours after reconnecting.
+    // Older ones go into history but don't overwrite the clipboard or notify.
+    private const val FRESH_MS = 10 * 60 * 1000L
+
     fun handle(context: Context, crypto: Crypto, event: JSONObject) {
         val header = try {
             JSONObject(crypto.decryptString(event.getString("message")))
@@ -30,8 +34,11 @@ object Incoming {
                     String(crypto.decrypt(Ntfy.download(url)), Charsets.UTF_8)
                 }
                 val from = name ?: "your other phone"
+                val sentAt = event.optLong("time", 0L) * 1000
+                val fresh = sentAt == 0L || System.currentTimeMillis() - sentAt < FRESH_MS
+                History.add(context, History.RECEIVED, text, from, if (sentAt > 0) sentAt else System.currentTimeMillis())
+                if (!fresh) return
                 Clip.setText(context, text)
-                History.add(context, History.RECEIVED, text, from)
                 // The home screen shows new items itself; only notify when it isn't open.
                 if (!MainActivity.visible) Notifications.textReceived(context, from, text)
             }

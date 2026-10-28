@@ -35,11 +35,11 @@ object History {
     }
 
     @Synchronized
-    fun add(c: Context, direction: Int, text: String, from: String) {
+    fun add(c: Context, direction: Int, text: String, from: String, time: Long = System.currentTimeMillis()) {
         val limit = Prefs.historyLimit(c)
         if (limit <= 0) return
-        val item = Item(direction, text.take(MAX_TEXT), from, System.currentTimeMillis())
-        save(c, (listOf(item) + items(c)).take(limit))
+        val item = Item(direction, text.take(MAX_TEXT), from, time)
+        save(c, (listOf(item) + items(c)).sortedByDescending { it.time }.take(limit))
     }
 
     @Synchronized

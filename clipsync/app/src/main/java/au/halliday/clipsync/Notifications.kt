@@ -46,6 +46,7 @@ object Notifications {
             .setOnlyAlertOnce(true)
             .setPriority(NotificationCompat.PRIORITY_MIN)
             .setContentIntent(openApp(c))
+            .addAction(0, "Send clipboard", sendClipboard(c))
             .build()
     }
 
@@ -81,6 +82,11 @@ object Notifications {
             // Notifications not allowed; the clipboard is still updated.
         }
     }
+
+    private fun sendClipboard(c: Context): PendingIntent = PendingIntent.getActivity(
+        c, 1, Intent(c, SendClipboardActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+        PendingIntent.FLAG_IMMUTABLE,
+    )
 
     private fun openApp(c: Context): PendingIntent = PendingIntent.getActivity(
         c, 0, Intent(c, MainActivity::class.java), PendingIntent.FLAG_IMMUTABLE,
