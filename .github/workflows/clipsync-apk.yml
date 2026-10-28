@@ -1,4 +1,4 @@
-name: ClipSync APK
+name: ClipSync builds
 
 on:
   push:
@@ -11,7 +11,7 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  android:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -28,13 +28,43 @@ jobs:
       - run: cp app/build/outputs/apk/release/app-release.apk ClipSync.apk
       - uses: actions/upload-artifact@v4
         with:
-          name: ClipSync
+          name: ClipSync-android
           path: clipsync/ClipSync.apk
+
+  windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: clipsync/windows
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Build
+        run: dotnet publish ClipSync.csproj -c Release -o out
+      - run: Copy-Item out/ClipSync.exe ClipSync-Windows.exe
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ClipSync-windows
+          path: clipsync/windows/ClipSync-Windows.exe
+
+  release:
+    needs: [android, windows]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          merge-multiple: true
       - uses: softprops/action-gh-release@v2
         with:
           tag_name: clipsync-latest
           name: ClipSync app
-          body: Download ClipSync.apk on both phones and install it.
-          files: clipsync/ClipSync.apk
+          body: |
+            Android phones: download ClipSync.apk and install it.
+            Windows PC: download ClipSync-Windows.exe and run it (it lives in the system tray).
+          files: |
+            ClipSync.apk
+            ClipSync-Windows.exe
           prerelease: true
           make_latest: false
