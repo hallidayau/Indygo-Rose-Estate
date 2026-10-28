@@ -1,82 +1,231 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?android:colorBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/status"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:layout_height="?attr/actionBarSize"
+            app:title="@string/app_name" />
 
-        <TextView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Pairing code (must be the same on both phones)" />
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-        <EditText
-            android:id="@+id/code"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:hint="e.g. K7QM-2XPA-9RTD-VH4N"
-            android:importantForAutofill="no"
-            android:inputType="textVisiblePassword|textCapCharacters"
-            android:singleLine="true"
-            android:textSize="20sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/generate"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Generate code" />
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <Button
-                android:id="@+id/save"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Save &amp; connect" />
-        </LinearLayout>
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/status_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/send"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Send clipboard now" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
 
-        <Button
-            android:id="@+id/tile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Add 'Send clipboard' quick tile" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/battery"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Allow running in background" />
+                            <FrameLayout
+                                android:layout_width="32dp"
+                                android:layout_height="32dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:lineSpacingMultiplier="1.2"
-            android:text="How to use\n\n• Send: in any app tap Share → ClipSync (links and text). Or copy something, swipe down and tap the 'Send clipboard' tile.\n\n• Receive: it lands on this phone's clipboard automatically. Tap the paste suggestion on your keyboard, or long-press a text box → Paste.\n\n• Everything is encrypted with your pairing code before it leaves the phone." />
+                                <ImageView
+                                    android:id="@+id/status_icon"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:importantForAccessibility="no" />
+
+                                <com.google.android.material.progressindicator.CircularProgressIndicator
+                                    android:id="@+id/status_progress"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:indeterminate="true"
+                                    android:visibility="gone"
+                                    app:indicatorSize="24dp"
+                                    app:trackThickness="3dp" />
+                            </FrameLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/status_title"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="@style/TextAppearance.ClipSync.Section" />
+
+                                <TextView
+                                    android:id="@+id/status_body"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="@style/TextAppearance.ClipSync.BodySecondary" />
+
+                                <TextView
+                                    android:id="@+id/status_meta"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:textAppearance="@style/TextAppearance.ClipSync.Meta" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/status_actions"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/retry"
+                                style="@style/Widget.ClipSync.Button.Tonal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Try again"
+                                app:icon="@drawable/ic_refresh" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/check_code"
+                                style="@style/Widget.ClipSync.Button.Text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="Check pairing code" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="4dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_devices" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="Paired with"
+                        android:textAppearance="@style/TextAppearance.ClipSync.BodySecondary" />
+
+                    <TextView
+                        android:id="@+id/peer"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textAppearance="@style/TextAppearance.ClipSync.Section"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/send_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Send clipboard now"
+                    app:icon="@drawable/ic_send"
+                    app:iconGravity="textStart" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingHorizontal="4dp"
+                        android:text="Recent"
+                        android:textAppearance="@style/TextAppearance.ClipSync.Section" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/clear"
+                        style="@style/Widget.ClipSync.Button.Text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Clear" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/history_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:animateLayoutChanges="true"
+                    android:orientation="vertical" />
+
+                <LinearLayout
+                    android:id="@+id/empty_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:paddingVertical="32dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_history" />
+
+                    <TextView
+                        android:id="@+id/empty_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="No items yet"
+                        android:textAppearance="@style/TextAppearance.ClipSync.Section" />
+
+                    <TextView
+                        android:id="@+id/empty_body"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center"
+                        android:text="Items you send or receive will appear here."
+                        android:textAppearance="@style/TextAppearance.ClipSync.BodySecondary" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
     </LinearLayout>
-</ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

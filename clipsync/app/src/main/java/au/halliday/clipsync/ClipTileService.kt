@@ -7,6 +7,10 @@ import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 
 class ClipTileService : TileService() {
+    override fun onTileAdded() = Prefs.setTileAdded(this, true)
+
+    override fun onTileRemoved() = Prefs.setTileAdded(this, false)
+
     override fun onStartListening() {
         qsTile?.apply {
             state = Tile.STATE_ACTIVE

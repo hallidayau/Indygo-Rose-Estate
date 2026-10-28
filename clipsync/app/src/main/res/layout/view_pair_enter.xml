@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/code_layout"
+    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Pairing code"
+    app:boxCornerRadiusBottomEnd="16dp"
+    app:boxCornerRadiusBottomStart="16dp"
+    app:boxCornerRadiusTopEnd="16dp"
+    app:boxCornerRadiusTopStart="16dp"
+    app:endIconContentDescription="Paste"
+    app:endIconDrawable="@drawable/ic_content_paste"
+    app:endIconMode="custom"
+    app:placeholderText="XXXX-XXXX-XXXX-XXXX">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/code_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="monospace"
+        android:imeOptions="actionDone"
+        android:importantForAutofill="no"
+        android:inputType="textCapCharacters|textVisiblePassword|textNoSuggestions"
+        android:maxLength="19"
+        android:singleLine="true"
+        android:textSize="18sp" />
+</com.google.android.material.textfield.TextInputLayout>

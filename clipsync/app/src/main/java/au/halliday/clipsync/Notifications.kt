@@ -7,7 +7,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.util.Patterns
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import java.util.concurrent.atomic.AtomicInteger
@@ -30,46 +29,54 @@ object Notifications {
         )
     }
 
-    fun service(c: Context, status: String): Notification =
-        NotificationCompat.Builder(c, CHANNEL_SERVICE)
+    /** The silent ongoing notification, worded for the current connection state. */
+    fun service(c: Context): Notification {
+        val (title, text) = when (SyncState.status) {
+            SyncState.Status.CONNECTED ->
+                "ClipSync is on" to (Prefs.peerName(c)?.let { "Connected to $it" } ?: "Connected")
+            SyncState.Status.OFFLINE, SyncState.Status.ERROR ->
+                "ClipSync is offline" to "We'll reconnect automatically."
+            else -> "ClipSync is on" to "Reconnecting…"
+        }
+        return NotificationCompat.Builder(c, CHANNEL_SERVICE)
             .setSmallIcon(R.drawable.ic_stat)
-            .setContentTitle("ClipSync is on")
-            .setContentText(status)
+            .setContentTitle(title)
+            .setContentText(text)
             .setOngoing(true)
+            .setOnlyAlertOnce(true)
             .setPriority(NotificationCompat.PRIORITY_MIN)
             .setContentIntent(openApp(c))
             .build()
+    }
 
     fun textReceived(c: Context, from: String, text: String) {
         ensureChannels(c)
         val id = nextId.incrementAndGet()
         val trimmed = text.trim()
-        val isLink = !trimmed.contains(' ') && Patterns.WEB_URL.matcher(trimmed).matches()
-        val tap = if (isLink) {
-            val url = if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) trimmed else "https://$trimmed"
-            PendingIntent.getActivity(
+        val url = Links.urlOf(trimmed)
+        val builder = NotificationCompat.Builder(c, CHANNEL_CLIPS)
+            .setSmallIcon(R.drawable.ic_stat)
+            .setAutoCancel(true)
+        if (url != null) {
+            val open = PendingIntent.getActivity(
                 c, id, Intent(Intent.ACTION_VIEW, Uri.parse(url)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                 PendingIntent.FLAG_IMMUTABLE,
             )
+            builder.setContentTitle("Link copied from $from")
+                .setContentText(Links.host(url))
+                .setContentIntent(open)
+                .addAction(0, "Open link", open)
         } else {
-            openApp(c)
+            builder.setContentTitle("Copied from $from")
+                .setContentText(trimmed.take(200))
+                .setStyle(NotificationCompat.BigTextStyle().bigText(trimmed.take(1000)))
+                .setContentIntent(openApp(c))
         }
-        val builder = NotificationCompat.Builder(c, CHANNEL_CLIPS)
-            .setSmallIcon(R.drawable.ic_stat)
-            .setContentTitle(if (isLink) "Link copied from $from" else "Copied from $from")
-            .setContentText(trimmed.take(200))
-            .setStyle(NotificationCompat.BigTextStyle().bigText(trimmed.take(1000)))
-            .setAutoCancel(true)
-            .setContentIntent(tap)
         if (text.length <= 50_000) {
             builder.addAction(0, "Copy again", ActionReceiver.copyText(c, id, text))
         }
-        notify(c, id, builder.build())
-    }
-
-    private fun notify(c: Context, id: Int, notification: Notification) {
         try {
-            NotificationManagerCompat.from(c).notify(id, notification)
+            NotificationManagerCompat.from(c).notify(id, builder.build())
         } catch (e: SecurityException) {
             // Notifications not allowed; the clipboard is still updated.
         }

@@ -17,8 +17,7 @@ class ShareActivity : Activity() {
         if (text.isNullOrBlank()) {
             SendTask.toast(this, "Nothing to send — ClipSync only sends text and links")
         } else {
-            val app = applicationContext
-            SendTask.run(app) { Sender.sendText(app, text) }
+            SendTask.sendWithToast(this, text)
         }
         finish()
     }

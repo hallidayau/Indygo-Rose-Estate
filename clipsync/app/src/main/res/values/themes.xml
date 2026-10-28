@@ -1,11 +1,133 @@
 <resources>
-    <style name="AppTheme" parent="android:Theme.Material.Light.DarkActionBar">
-        <item name="android:colorPrimary">@color/brand</item>
-        <item name="android:colorPrimaryDark">@color/brand_dark</item>
-        <item name="android:colorAccent">@color/brand</item>
+    <style name="Theme.ClipSync" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorPrimaryContainer">@color/primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/on_primary_container</item>
+        <item name="colorSecondary">@color/primary</item>
+        <item name="colorSecondaryContainer">@color/primary_container</item>
+        <item name="colorOnSecondaryContainer">@color/on_primary_container</item>
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorOnBackground">@color/on_surface</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/on_surface</item>
+        <item name="colorSurfaceVariant">@color/surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/on_surface_variant</item>
+        <item name="colorSurfaceContainerLowest">@color/surface</item>
+        <item name="colorSurfaceContainerLow">@color/surface</item>
+        <item name="colorSurfaceContainer">@color/surface</item>
+        <item name="colorSurfaceContainerHigh">@color/surface</item>
+        <item name="colorSurfaceContainerHighest">@color/surface_variant</item>
+        <item name="colorOutline">@color/outline</item>
+        <item name="colorOutlineVariant">@color/outline_variant</item>
+        <item name="colorError">@color/error</item>
+        <item name="colorErrorContainer">@color/error_container</item>
+        <item name="colorOnErrorContainer">@color/on_error_container</item>
+        <item name="android:statusBarColor">@color/background</item>
+        <item name="android:navigationBarColor">@color/background</item>
+        <item name="android:windowLightStatusBar">@bool/light_bars</item>
+        <item name="android:windowLightNavigationBar">@bool/light_bars</item>
+        <item name="materialButtonStyle">@style/Widget.ClipSync.Button</item>
+        <item name="materialCardViewStyle">@style/Widget.ClipSync.Card</item>
+        <item name="toolbarStyle">@style/Widget.ClipSync.Toolbar</item>
     </style>
 
+    <!-- Invisible activities used for sharing and the quick tile. -->
     <style name="Transparent" parent="android:Theme.Translucent.NoTitleBar">
         <item name="android:windowAnimationStyle">@null</item>
+    </style>
+
+    <style name="Widget.ClipSync.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">?android:colorBackground</item>
+        <item name="titleTextAppearance">@style/TextAppearance.ClipSync.AppBar</item>
+        <item name="navigationIconTint">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="Widget.ClipSync.Button" parent="Widget.Material3.Button">
+        <item name="cornerRadius">16dp</item>
+        <item name="android:minHeight">56dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.ClipSync.Button</item>
+    </style>
+
+    <style name="Widget.ClipSync.Button.Tonal" parent="Widget.Material3.Button.TonalButton">
+        <item name="cornerRadius">16dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.ClipSync.Button</item>
+    </style>
+
+    <style name="Widget.ClipSync.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="cornerRadius">16dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.ClipSync.Button</item>
+    </style>
+
+    <style name="Widget.ClipSync.Button.Text" parent="Widget.Material3.Button.TextButton">
+        <item name="cornerRadius">16dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.ClipSync.Button</item>
+    </style>
+
+    <style name="Widget.ClipSync.Card" parent="Widget.Material3.CardView.Filled">
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardBackgroundColor">@color/surface</item>
+    </style>
+
+    <!-- Typography (Roboto, Material 3 scale from the spec) -->
+    <style name="TextAppearance.ClipSync.Display" parent="TextAppearance.Material3.DisplaySmall">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="TextAppearance.ClipSync.Headline" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="TextAppearance.ClipSync.AppBar" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textSize">22sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="TextAppearance.ClipSync.Section" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="TextAppearance.ClipSync.Body" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="TextAppearance.ClipSync.BodySecondary" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+    </style>
+
+    <style name="TextAppearance.ClipSync.Meta" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+    </style>
+
+    <style name="TextAppearance.ClipSync.Button" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextAppearance.ClipSync.Code" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textSize">22sp</item>
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.04</item>
     </style>
 </resources>
