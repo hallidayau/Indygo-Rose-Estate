@@ -18,7 +18,8 @@ object Incoming {
         if (header.optString("from") == Prefs.deviceId(context)) return
 
         val name = header.optString("name").ifBlank { null }
-        if (name != null) Prefs.setPeerName(context, name)
+        val fromId = header.optString("from")
+        if (name != null && fromId.isNotEmpty()) Prefs.setPeer(context, fromId, name)
 
         when (header.optString("type")) {
             "hello" -> try {
@@ -33,7 +34,7 @@ object Incoming {
                     val url = event.optJSONObject("attachment")?.optString("url") ?: return
                     String(crypto.decrypt(Ntfy.download(url)), Charsets.UTF_8)
                 }
-                val from = name ?: "your other phone"
+                val from = name ?: "your other device"
                 val sentAt = event.optLong("time", 0L) * 1000
                 val fresh = sentAt == 0L || System.currentTimeMillis() - sentAt < FRESH_MS
                 History.add(context, History.RECEIVED, text, from, if (sentAt > 0) sentAt else System.currentTimeMillis())

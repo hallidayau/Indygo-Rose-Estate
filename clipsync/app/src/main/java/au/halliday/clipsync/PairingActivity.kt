@@ -40,7 +40,7 @@ class PairingActivity : AppCompatActivity() {
     private fun disconnect() {
         SyncService.stop(this)
         Prefs.setPassphrase(this, "")
-        Prefs.setPeerName(this, null)
+        Prefs.clearPeers(this)
         Prefs.setSetupDone(this, false)
         startActivity(
             Intent(this, SetupActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)

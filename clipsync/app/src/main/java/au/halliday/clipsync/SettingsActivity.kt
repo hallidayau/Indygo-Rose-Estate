@@ -30,7 +30,7 @@ class SettingsActivity : AppCompatActivity() {
     private fun buildRows() {
         rows.removeAllViews()
         row(R.drawable.ic_smartphone, "Device name", Prefs.deviceName(this)) { editName() }
-        row(R.drawable.ic_link, "Paired device", Prefs.peerName(this) ?: "Not seen yet") {
+        row(R.drawable.ic_link, "Paired devices", Prefs.peerName(this) ?: "Not seen yet") {
             startActivity(Intent(this, PairingActivity::class.java))
         }
         val tile = Prefs.tileAdded(this)
@@ -90,7 +90,7 @@ class SettingsActivity : AppCompatActivity() {
         input.setSelection(input.length())
         MaterialAlertDialogBuilder(this)
             .setTitle("Device name")
-            .setMessage("This is the name your other phone sees.")
+            .setMessage("This is the name your other devices see.")
             .setView(content)
             .setNegativeButton("Cancel", null)
             .setPositiveButton("Save") { _, _ ->

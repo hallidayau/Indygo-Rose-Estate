@@ -21,7 +21,7 @@ object Notifications {
         val nm = c.getSystemService(NotificationManager::class.java)
         nm.createNotificationChannel(
             NotificationChannel(CHANNEL_SERVICE, "Connection", NotificationManager.IMPORTANCE_MIN).apply {
-                description = "Keeps ClipSync listening for your other phone"
+                description = "Keeps ClipSync listening for your other devices"
             }
         )
         nm.createNotificationChannel(

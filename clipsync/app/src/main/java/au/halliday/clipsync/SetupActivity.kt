@@ -146,7 +146,7 @@ class SetupActivity : AppCompatActivity() {
             Step.NOTIFY -> {
                 setIcon(R.drawable.ic_notifications)
                 title.text = "Allow notifications"
-                body.text = "We'll notify you when text or links arrive from your other phone."
+                body.text = "We'll notify you when text or links arrive from your other devices."
                 progress.text = "Step 2 of 4"
                 val needsPermission = Build.VERSION.SDK_INT >= 33 &&
                     checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
@@ -273,7 +273,7 @@ class SetupActivity : AppCompatActivity() {
     private fun savePairing(code: String) {
         if (code != Prefs.passphrase(this)) {
             Prefs.setPassphrase(this, code)
-            Prefs.setPeerName(this, null)
+            Prefs.clearPeers(this)
         }
         SyncService.start(this, restart = true)
         advance()

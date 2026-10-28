@@ -2,6 +2,7 @@ package au.halliday.clipsync
 
 import android.content.Context
 import android.os.Build
+import org.json.JSONObject
 import java.util.UUID
 
 object Prefs {
@@ -35,16 +36,34 @@ object Prefs {
         sp(c).edit().putString("device_name", value.trim()).apply()
     }
 
-    /** Learned from the other phone's messages; null until it has said hello. */
-    fun peerName(c: Context): String? = sp(c).getString("peer_name", null)
+    /** Other devices on this pairing code (id → name), learned from their messages. */
+    private fun peers(c: Context): JSONObject =
+        try {
+            JSONObject(sp(c).getString("peers", "{}") ?: "{}")
+        } catch (e: Exception) {
+            JSONObject()
+        }
 
-    fun setPeerName(c: Context, value: String?) {
-        if (value == peerName(c)) return
-        sp(c).edit().putString("peer_name", value).apply()
+    /** Names of the other devices, e.g. "Pixel 8, DESKTOP-PC"; null until one has said hello. */
+    fun peerName(c: Context): String? {
+        val all = peers(c)
+        val names = all.keys().asSequence().map { all.getString(it) }.distinct().toList()
+        return if (names.isEmpty()) null else names.joinToString(", ")
+    }
+
+    fun setPeer(c: Context, id: String, name: String) {
+        val all = peers(c)
+        if (all.optString(id) == name) return
+        sp(c).edit().putString("peers", all.put(id, name).toString()).apply()
         SyncState.changed()
     }
 
-    fun peerLabel(c: Context): String = peerName(c) ?: "your other phone"
+    fun clearPeers(c: Context) {
+        sp(c).edit().remove("peers").apply()
+        SyncState.changed()
+    }
+
+    fun peerLabel(c: Context): String = peerName(c) ?: "your other devices"
 
     fun historyLimit(c: Context): Int = sp(c).getInt("history_limit", 10)
 

@@ -167,7 +167,7 @@ class MainActivity : AppCompatActivity() {
                 statusBody.text = "This usually takes a few seconds."
             }
         }
-        peer.text = Prefs.peerName(this) ?: "Waiting for your other phone"
+        peer.text = Prefs.peerName(this) ?: "Waiting for your other devices"
     }
 
     private fun statusStyle(background: Int, iconRes: Int, tint: Int) {
